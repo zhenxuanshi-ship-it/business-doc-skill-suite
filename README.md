@@ -1,6 +1,6 @@
 # Business Doc Skill Suite
 
-> 当前版本：0.1.3
+> 当前版本：0.1.4
 
 面向 **企业 / 政务正式文档生产** 的 OpenClaw skill 套件。
 
@@ -20,6 +20,20 @@
 ---
 
 ## Changelog
+
+### 0.1.4 (2026-03-15)
+
+#### 优化
+
+- **Skill触发词优化**：优化了所有skill的触发关键词，使其更容易被正确识别
+  - biz-discovery: 增加"需求梳理"、"项目brief"等
+  - writer: 增加"分节写"、"存盘写"、"checkpoint"
+  - reviewer: 增加"审一下"、"帮我review"等
+  - integrity: 增加"完整性检查"、"一致性检查"等
+  - reviser: 增加"修成v2"、"按反馈修改"等
+  - pipeline: 增加"走完整流程"、"一路做完"等
+
+---
 
 ### 0.1.3 (2026-03-15)
 
