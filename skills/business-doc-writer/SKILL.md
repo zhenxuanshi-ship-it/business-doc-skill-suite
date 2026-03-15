@@ -7,6 +7,19 @@ description: Write structured business documents for project and product work. U
 
 Write formal business and product documents from rough notes, briefs, meeting notes, or partially structured inputs.
 
+## Agent execution preference
+
+This skill is designed to run in the main / coordinator session by default.
+
+**Default: main agent writes directly.** The main agent should do the writing work directly, not delegate to sub-agents unless explicitly instructed.
+
+**Sub-agent mode only when user specifies.** Only use sub-agent for writing when the user explicitly asks for it, such as:
+- "用子代理写"
+- "派生子代理写"
+- "spawn a child agent to write"
+
+For all other cases, write directly in the main session.
+
 ## Core rule
 
 Do not pretend missing facts are settled.
@@ -52,6 +65,11 @@ Select the nearest mode based on user intent:
    - For one-page summaries for managers / leaders
    - Focus on decision-ready clarity, not detail overload
 
+7. **dense-longform**
+   - For long-form, report-like, high-density writing
+   - Use especially for 项目建议书 and 可行性研究报告 when the user expects a substantial document rather than a lightweight draft
+   - Focus on argument depth, section expansion, supporting logic, and report-grade readability
+
 If ambiguous, ask 1-3 clarifying questions max. If still ambiguous, default to the most practical output and say what assumption you made.
 
 ## Workflow
@@ -87,6 +105,20 @@ Use the matching reference:
 - `references/architecture-design.md`
 
 Use the template under `assets/templates/` only when you need a fast skeleton.
+
+### Step 3.5: Choose depth level intentionally
+
+For lightweight documents, a normal draft is fine.
+
+For these document types, default to **dense-longform** unless the user asks for a short version:
+- project-proposal
+- feasibility-report
+
+Dense-longform means:
+- prioritize full section development over fast completeness
+- write key sections as report sections, not summary blurbs
+- allow fewer subsections if that gives stronger content density
+- explicitly develop problem -> impact -> approach -> value logic
 
 ### Step 4: Draft like a real working document
 
@@ -133,6 +165,63 @@ Reject:
 - sections that say a thing is important but do not explain why
 - decorative summary language with no operational value
 
+### Step 4.6: Long-form expansion rules
+
+When writing in `dense-longform`, apply these rules:
+
+1. **Set a target density**
+   - `project-proposal`: aim for roughly 3000-6000 Chinese characters unless the user asks for a shorter note
+   - `feasibility-report`: aim for roughly 5000-10000 Chinese characters unless the user asks for a shorter note
+
+2. **Force key sections to be developed, not introduced**
+   For key sections, do not stop at summary-level language.
+   Explain:
+   - the current state,
+   - the problem,
+   - the impact,
+   - the proposed path,
+   - the reasoning behind the recommendation.
+
+3. **Prefer argument flow over heading count**
+   A strong long document should read like a developed argument, not a multiplied outline.
+
+4. **Use section-internal logic chains**
+   In project proposals and feasibility reports, important sections should usually follow a chain like:
+   - current situation
+   - existing problem
+   - consequence / pressure
+   - proposed solution or direction
+   - value or conclusion
+
+5. **Expand subheadings and bullet points into real prose**
+   In the body of the document, if you introduce a subheading or bullet point, do not leave it as a label-only item.
+   Each subheading or bullet must be followed by enough explanatory writing to answer at least one of these:
+   - what it means,
+   - why it matters,
+   - how it works,
+   - what problem it solves,
+   - what constraint or risk is attached to it.
+
+   Bad pattern:
+   - a subheading followed by one shallow sentence
+   - a bullet list that only names items without explaining them
+
+   Better pattern:
+   - state the point,
+   - then explain it in 2-5 sentences of concrete prose,
+   - and connect it back to the document's recommendation or design logic.
+
+6. **Do not underwrite critical sections**
+   If the document type is `project-proposal` or `feasibility-report`, these sections must be developed substantially:
+   - background / current state
+   - necessity
+   - construction goals
+   - construction content
+   - implementation path
+   - budget / investment explanation
+   - risk analysis
+   - conclusion / recommendation
+
 ### Step 5: Add operational value
 
 When helpful, append these sections:
@@ -165,6 +254,12 @@ Always include:
 - explicit risk section
 - recommendation with rationale
 
+For long-form feasibility reports:
+- current-state analysis must be developed, not just mentioned
+- options comparison must explain why options differ and how the recommendation is chosen
+- feasibility sections must contain real constraints and enabling conditions
+- conclusion must feel earned by the analysis, not announced in advance
+
 ### project-proposal
 
 Default sections:
@@ -181,6 +276,13 @@ Default sections:
 Emphasize:
 - why this project should be approved
 - what success looks like
+- what current problem makes this project necessary now
+- why the proposed scope is the right first step
+
+For long-form project proposals:
+- do not treat sections as placeholders
+- develop necessity, construction content, implementation path, and budget explanation in real prose
+- explain why the recommendation follows from the earlier analysis
 
 ### prd
 
@@ -235,11 +337,12 @@ Default sections:
 ### Good style
 - use concrete nouns
 - use short paragraphs
-- prefer bullets for requirements and risks
+- prefer bullets for requirements and risks, but always expand important bullets with prose
 - state decisions clearly
 - distinguish facts, assumptions, and proposals
 - explain why, not just what
 - develop core sections with enough supporting detail to stand on their own
+- when using subheadings, make each subheading carry real explanatory content rather than label-only text
 
 ### Bad style
 - “赋能、抓手、闭环、全面提升” style filler unless the user explicitly wants official/government style

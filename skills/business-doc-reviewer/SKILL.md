@@ -7,6 +7,18 @@ description: Review business and product documents from enterprise decision-maki
 
 Review business documents from multiple enterprise roles instead of academic reviewer roles.
 
+## Agent execution preference
+
+This skill is designed to run in the main / coordinator session by default.
+
+**Default: main agent reviews directly.** The main agent should do the review work directly.
+
+**Sub-agent mode only when user specifies.** Only use sub-agent for review when the user explicitly asks for it, such as:
+- "用子代理review"
+- "派生子代理评审"
+
+For all other cases, review directly in the main session.
+
 ## Core goal
 
 Do not just say whether a document is good.
@@ -134,6 +146,11 @@ Always check these dimensions:
    - Does the document contain substance, or just headings plus short summaries?
    - Are core sections written through, or merely introduced?
 
+7. **argument depth / reasoning sufficiency**
+   - Does the document merely state conclusions, or does it actually support them?
+   - Are necessity, scope, budget, implementation path, and recommendation argued with enough depth?
+   - Does the middle of the document do the work required by the ending?
+
 ### Step 4: Convert review into action
 
 Do not stop at critique.
@@ -143,6 +160,10 @@ Always end with:
 - what to fix first
 - what can wait
 - what should be removed, clarified, or restructured
+
+When reviewing project proposals or feasibility reports, explicitly check whether the document is:
+- only structurally complete, or
+- genuinely report-grade and discussion-ready.
 
 ## Severity model
 
@@ -165,6 +186,11 @@ Also assess **skeletonization risk**:
 - **High**: many headings, thin sections, low information density, document feels like an annotated outline
 - **Medium**: some major sections are underdeveloped
 - **Low**: core sections have real substance and decision value
+
+For long-form documents, also assess **report maturity**:
+- **Draft-grade**: usable as an internal outline or early draft only
+- **Discussion-grade**: usable for internal review and structured discussion
+- **Submission-grade**: strong enough for formal internal circulation or submission with minor polishing
 
 ## Output format
 
@@ -222,6 +248,7 @@ Good:
 - “The recommendation is too early because the options comparison is not real yet.”
 - “The PRD mixes user need, implementation detail, and acceptance criteria in the same section.”
 - “This section is only a heading plus commentary. It still does not explain the actual implementation or decision basis.”
+- “These bullet points name the right ideas, but they still need paragraph-level expansion to be usable in a formal document.”
 
 Bad:
 - “This document demonstrates strong potential but may benefit from further enhancement in several areas.”

@@ -98,6 +98,8 @@ Look for:
 - conclusion is stronger than evidence
 - “necessary” is asserted but not shown
 - “feasible” is declared without addressing key constraints
+- budget strength exceeds budget basis
+- implementation commitment exceeds implementation preparation
 
 ### F. Risk closure
 
@@ -124,6 +126,15 @@ Look for:
 - multiple sections with very low information gain
 - documents that look complete structurally but remain thin operationally
 
+### I. Insufficient-support risk
+
+Look for:
+- recommendation is stronger than the body of analysis
+- budget numbers are more specific than their basis
+- scope is more ambitious than the implementation path supports
+- conclusions rely on sections that were only introduced, not developed
+- key claims are present, but the document does not spend enough text actually proving them
+
 ## Workflow
 
 ### Step 1: Identify document type
@@ -139,6 +150,8 @@ Before line-by-line issues, detect the big failure modes:
 - optimistic timeline fantasy
 - decorative risk section
 - hollow-outline structure with insufficient expansion
+- long-form document that still reads like a compressed outline
+- budget / recommendation / implementation sections that are thinner than their importance requires
 
 ### Step 3: Produce issue list with evidence
 

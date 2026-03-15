@@ -1,5 +1,7 @@
 # Business Doc Skill Suite
 
+> 当前版本：0.1.2
+
 面向 **企业 / 政务正式文档生产** 的 OpenClaw skill 套件。
 
 这套 skill 不是给学术论文用的，而是给下面这些文档用的：
@@ -11,9 +13,43 @@
 - 实施方案 / 推进计划
 - 管理层摘要 / Executive Summary
 
-它的核心目标不是“快速凑一篇文档”，而是把正式文档的生产过程拆成：
+它的核心目标不是"快速凑一篇文档"，而是把正式文档的生产过程拆成：
 
 > **澄清 → 写作 → 评审 → 校验 → 修订 → 定稿**
+
+---
+
+## Changelog
+
+### 0.1.2 (2026-03-15)
+
+#### 新增功能
+
+- **长文模式（dense-longform）**
+  - 新增 `dense-longform` 模式，专门面向项目建议书、可行性研究报告
+  - 明确目标字数：`project-proposal` 3000-6000 中文字，`feasibility-report` 5000-10000 中文字
+  - 关键章节必须厚写：背景/现状、必要性、建设目标、建设内容、实施路径、预算说明、风险分析、结论建议
+
+- **小标题与分点展开规则**
+  - 正文里凡是小标题和分点，不能只点名词，必须展开叙述
+  - 每个点后要回答：是什么、为什么、怎么运作、解决什么问题、有什么约束/风险
+  - reviewer 新增检查维度：检测"点名词但没展开"的问题
+
+- **子代理执行策略**
+  - 默认：主代理直接写/审/改
+  - 只有用户明确指定时才用子代理（如"用子代理写"、"派生子代理重跑"）
+
+#### 修复优化
+
+- 强化了"反骨架化"写作规则
+- 优化了 reviewer 的论证深度检查
+- 完善了 integrity 的建议支撑度验证
+
+---
+
+### 0.1.1 (2026-03-14)
+
+- 初始版本发布
 
 ---
 
@@ -46,11 +82,9 @@
 - **Biz Discovery**：把会议纪要、聊天记录、零散想法整理成结构化 brief
 - **Business Doc Writer**：生成建议书、可研、PRD、架构设计等正式文档
 - **Business Doc Reviewer**：从企业多角色视角评审，不走学术审稿风格
-- **Business Doc Integrity**：检查逻辑、一致性、术语、数字、scope 和“骨架化风险”
+- **Business Doc Integrity**：检查逻辑、一致性、术语，数字、scope 和"骨架化风险"
 - **Business Doc Reviser**：按 review / integrity / stakeholder comments 定向修文
 - **Business Doc Pipeline**：做阶段判断和流程串联
-
-另外，writer / reviewer / integrity 已经针对“空心标题 / 目录注释式写作”做过一轮优化。
 
 ---
 
@@ -74,7 +108,7 @@
 - `open-questions.md`
 
 **例子**
-```text
+```
 帮我梳理这个项目
 把这些会议纪要整理成项目输入
 先澄清范围，再写文档
@@ -92,14 +126,16 @@
 - `architecture-design`
 - `implementation-plan`
 - `executive-summary`
+- `dense-longform` (新增：长文模式)
 
 **特点**
 - 先写透，再写全
 - 信息不足时会显式标 assumptions / open questions
-- 减少空标题和“目录注释”式写法
+- 减少空标题和"目录注释"式写法
+- 小标题和分点必须展开叙述
 
 **例子**
-```text
+```
 写一个项目建议书
 写一个智慧园区可行性研究报告
 写一个统一认证中心 PRD
@@ -117,7 +153,7 @@
 - Technical Reviewer
 - Delivery Reviewer
 - Risk Reviewer
-- Devil’s Advocate
+- Devil's Advocate
 
 **输出**
 - overall judgment
@@ -125,9 +161,10 @@
 - revision roadmap
 - final recommendation
 - skeletonization risk（骨架化风险）
+- 论证深度检查（新增）
 
 **例子**
-```text
+```
 帮我 review 这份建议书
 从技术和风险视角审一下这份架构方案
 找一下这份 PRD 的硬伤
@@ -144,10 +181,10 @@
 - recommendation 有没有支撑
 - scope 是否漂移
 - 风险是否闭环
-- 文档是否“结构完整但内容失血”
+- 文档是否"结构完整但内容失血"
 
 **例子**
-```text
+```
 帮我做一致性检查
 看看有没有前后冲突
 做 final gate 检查
@@ -172,7 +209,7 @@
 - revision roadmap
 
 **例子**
-```text
+```
 按这些意见修改
 根据 integrity 报告修一版
 重写风险章节
@@ -190,7 +227,7 @@
 - 串联 writer / reviewer / integrity / reviser
 
 **例子**
-```text
+```
 从头到尾搞定这份文档
 先写再 review 再修改
 走完整流程
@@ -204,7 +241,7 @@
 
 适合：你现在只有会议纪要、需求碎片、口头要求。
 
-```text
+```
 biz-discovery
   → business-doc-writer
     → business-doc-reviewer
@@ -213,7 +250,7 @@ biz-discovery
 ```
 
 **示例**
-```text
+```
 帮我梳理这个项目，后面我要写项目建议书
 基于上面的 brief，写一份项目建议书
 帮我 review 这份项目建议书
@@ -227,14 +264,14 @@ biz-discovery
 
 适合：你已经有建议书 / PRD / 架构设计初稿。
 
-```text
+```
 business-doc-reviewer
   → business-doc-integrity
     → business-doc-reviser
 ```
 
 **示例**
-```text
+```
 帮我 review 这份 PRD
 再做一轮完整 integrity check
 根据两轮意见修成 v2
@@ -246,65 +283,14 @@ business-doc-reviewer
 
 适合：你已经知道要写什么，不想走完整流程。
 
-```text
+```
 business-doc-writer
 ```
 
 **示例**
-```text
+```
 写一个数据中台项目建议书
 写一个统一认证中心架构设计说明书
-```
-
----
-
-## Document types
-
-### 项目建议书
-适合：
-- 立项前汇报
-- 给领导看
-- 报批前说明材料
-
-推荐流程：
-```text
-discovery → writer(project-proposal) → reviewer → integrity → reviser
-```
-
----
-
-### 可行性研究报告
-适合：
-- 做必要性、可行性、方案比选、投入产出分析
-
-推荐流程：
-```text
-discovery → writer(feasibility-report) → reviewer(business-focus) → integrity → reviser
-```
-
----
-
-### PRD
-适合：
-- 功能需求说明
-- 产品、设计、研发协同
-
-推荐流程：
-```text
-discovery(requirements-seed) → writer(prd) → reviewer(product-focus) → integrity → reviser
-```
-
----
-
-### 架构设计 / 技术方案
-适合：
-- 技术方案设计
-- 模块拆分
-- 数据流、接口、部署和风险说明
-
-推荐流程：
-```text
-discovery → writer(architecture-design) → reviewer(technical-focus) → integrity → reviser
 ```
 
 ---
@@ -349,10 +335,61 @@ integrity 不只是查语病，而是查：
 
 ---
 
+## Document types
+
+### 项目建议书
+适合：
+- 立项前汇报
+- 给领导看
+- 报批前说明材料
+
+推荐流程：
+```
+discovery → writer(project-proposal) → reviewer → integrity → reviser
+```
+
+---
+
+### 可行性研究报告
+适合：
+- 做必要性、可行性、方案比选、投入产出分析
+
+推荐流程：
+```
+discovery → writer(feasibility-report) → reviewer(business-focus) → integrity → reviser
+```
+
+---
+
+### PRD
+适合：
+- 功能需求说明
+- 产品、设计、研发协同
+
+推荐流程：
+```
+discovery(requirements-seed) → writer(prd) → reviewer(product-focus) → integrity → reviser
+```
+
+---
+
+### 架构设计 / 技术方案
+适合：
+- 技术方案设计
+- 模块拆分
+- 数据流、接口、部署和风险说明
+
+推荐流程：
+```
+discovery → writer(architecture-design) → reviewer(technical-focus) → integrity → reviser
+```
+
+---
+
 ## Common prompts
 
 ### Discovery
-```text
+```
 帮我梳理这个项目
 把这些会议纪要整理成项目 brief
 先帮我拆清楚范围和干系人
@@ -360,7 +397,7 @@ integrity 不只是查语病，而是查：
 ```
 
 ### Writer
-```text
+```
 写一个项目建议书
 写一个可行性研究报告
 写一个 PRD
@@ -369,7 +406,7 @@ integrity 不只是查语病，而是查：
 ```
 
 ### Reviewer
-```text
+```
 帮我 review 这份文档
 从业务和风险视角审一下
 挑一下这份架构设计的硬伤
@@ -377,7 +414,7 @@ integrity 不只是查语病，而是查：
 ```
 
 ### Integrity
-```text
+```
 帮我做一致性检查
 看有没有前后冲突
 查查 recommendation 有没有支撑
@@ -385,7 +422,7 @@ integrity 不只是查语病，而是查：
 ```
 
 ### Reviser
-```text
+```
 按这些意见修一版
 重写这一节
 根据 roadmap 做 v2
@@ -394,157 +431,18 @@ integrity 不只是查语病，而是查：
 
 ---
 
-## Example workflows
-
-### Example 1 — 从会议纪要到项目建议书
-
-**场景**：你手里只有一次会后的纪要，内容很散，还没形成正式项目材料。
-
-**推荐流程**：
-```text
-biz-discovery
-  → business-doc-writer(project-proposal)
-  → business-doc-reviewer
-  → business-doc-integrity
-  → business-doc-reviser
-```
-
-**示例 prompt**：
-```text
-把这份会议纪要整理成项目 brief，后面我要写项目建议书
-基于上面的 brief，写一份项目建议书
-帮我从业务、风险和交付视角 review 一轮
-再做一次完整 integrity check
-按这两轮结果修成 v2
-```
-
-**适合**：
-- 立项沟通
-- 报领导
-- 前期方案讨论
-
----
-
-### Example 2 — 从想法到可行性研究报告
-
-**场景**：你已经有一个项目方向，但还不确定值不值得做，需要做必要性、可行性和方案比选。
-
-**推荐流程**：
-```text
-biz-discovery(proposal-intake)
-  → business-doc-writer(feasibility-report)
-  → business-doc-reviewer(business-focus)
-  → business-doc-integrity
-  → business-doc-reviser
-```
-
-**示例 prompt**：
-```text
-帮我梳理这个项目值不值得做，后面我要写可研
-写一份可行性研究报告
-重点从必要性、方案比选、预算和风险角度 review
-再查一轮 recommendation 有没有依据、预算口径有没有冲突
-按这些问题修一版
-```
-
-**适合**：
-- 方案论证
-- 立项前评估
-- 投入产出分析前置材料
-
----
-
-### Example 3 — 从需求碎片到 PRD
-
-**场景**：你有一些零散需求、产品想法、用户问题，但还没有成型需求文档。
-
-**推荐流程**：
-```text
-biz-discovery(requirements-seed)
-  → business-doc-writer(prd)
-  → business-doc-reviewer(product-focus)
-  → business-doc-integrity
-  → business-doc-reviser
-```
-
-**示例 prompt**：
-```text
-把这些零散需求整理成 PRD 输入
-写一个 PRD
-重点审一下用户场景、范围边界、验收标准
-再查一下需求有没有前后矛盾、scope 有没有漂移
-按结果出 v2
-```
-
-**适合**：
-- 产品需求澄清
-- 研发前需求沉淀
-- 产品/设计/研发对齐
-
----
-
-### Example 4 — 架构方案评审与修订
-
-**场景**：你已经有架构方案初稿，想知道它是否真的可实施，而不只是“看起来像架构文档”。
-
-**推荐流程**：
-```text
-business-doc-reviewer(technical-focus)
-  → business-doc-integrity
-  → business-doc-reviser(section-rewrite or full-revision)
-```
-
-**示例 prompt**：
-```text
-从技术视角 review 这份架构设计
-再做一轮 integrity check，看模块边界、术语、数据流和能力范围有没有打架
-按意见重写技术架构和风险权衡两节
-```
-
-**适合**：
-- 技术方案会审
-- 上会前自查
-- 架构说明书提质
-
----
-
-### Example 5 — 已有初稿，只想快速提质
-
-**场景**：文档已经写出来了，但你不确定是不是“只有骨架，没有血肉”。
-
-**推荐流程**：
-```text
-business-doc-reviewer
-  → business-doc-integrity
-  → business-doc-reviser
-```
-
-**示例 prompt**：
-```text
-帮我 review 这份文档，重点看有没有空心标题和内容不展开的问题
-再做一轮 integrity check
-最后按问题修成 v2
-```
-
-**适合**：
-- 任何已有文档
-- 想快速从 v1 提到 v2/v3
-- 想去掉“AI 骨架味”
-
----
-
 ## Known limitations
 
 当前仍是 v0.x / MVP 阶段，已知局限包括：
 
 1. **对本地化业务规则依赖人工补充**
-   - 比如地方版“通用项目”定义、部门职责边界、点位数量等
+   - 比如地方版"四步十调"定义、部门职责边界、点位数量等
 
 2. **对真实预算和真实约束仍需喂数**
    - skill 能帮你写结构和判断逻辑，但不能凭空知道你本地真实采购口径
 
 3. **reviewer / integrity 不是程序化万能校验器**
-   - 已经能识别“骨架化风险”和明显矛盾，但不是形式化验证系统
+   - 已经能识别"骨架化风险"和明显矛盾，但不是形式化验证系统
 
 4. **复杂项目建议至少跑两轮**
    - 第一轮：成稿
@@ -576,89 +474,21 @@ README 路径：
 如果你第一次用，最简单的启动方式是：
 
 ### 场景 1：什么都没有
-```text
+```
 帮我梳理这个项目，后面我要写项目建议书
 ```
 
 ### 场景 2：直接写
-```text
+```
 写一个 XXX 项目建议书
 ```
 
 ### 场景 3：已有文档要提升
-```text
+```
 帮我 review 这份文档，再做 integrity check，最后按意见修一版
 ```
 
 ---
-
-## Project structure
-
-```text
-business-doc-skill-suite/
-├── README.md
-├── LICENSE
-├── .gitignore
-└── skills/
-    ├── biz-discovery/
-    │   ├── SKILL.md
-    │   ├── references/
-    │   ├── assets/templates/
-    │   └── scripts/
-    ├── business-doc-writer/
-    │   ├── SKILL.md
-    │   ├── references/
-    │   ├── assets/templates/
-    │   └── scripts/
-    ├── business-doc-reviewer/
-    │   ├── SKILL.md
-    │   ├── references/
-    │   ├── assets/templates/
-    │   └── scripts/
-    ├── business-doc-integrity/
-    │   ├── SKILL.md
-    │   ├── references/
-    │   ├── assets/templates/
-    │   └── scripts/
-    ├── business-doc-reviser/
-    │   ├── SKILL.md
-    │   ├── references/
-    │   ├── assets/templates/
-    │   └── scripts/
-    └── business-doc-pipeline/
-        ├── SKILL.md
-        ├── references/
-        ├── assets/templates/
-        └── scripts/
-```
-
-### What each folder contains
-
-- **SKILL.md**
-  - 触发描述 + 核心工作流
-  - 决定 skill 什么时候被调用、怎么做任务
-
-- **references/**
-  - 给 skill 按需读取的参考规则
-  - 比如文档类型映射、review rubrics、integrity patterns
-
-- **assets/templates/**
-  - 模板文件
-  - 用来快速生成项目 brief、建议书、PRD、review report、revision roadmap 等骨架
-
-- **scripts/**
-  - 轻量辅助脚本
-  - 比如文件名生成、stage 检测、review checklist、术语/数字提取、feedback 分类
-
-### Design rationale
-
-这个 repo 采用的是“多 skill + 轻 orchestration”结构，而不是一个超大单体 skill。
-
-这样拆的好处是：
-- discovery、writing、review、integrity、revision 可以单独使用
-- pipeline 只负责串联，不负责把所有规则塞进一个超大 prompt
-- references / templates / scripts 可以按 skill 就地维护
-- 后续新增 doc type 或 review mode 时更容易演进
 
 ## Roadmap
 
@@ -674,4 +504,4 @@ business-doc-skill-suite/
 
 ## One-line summary
 
-**这套 skill 不是为了“快速凑文档”，而是为了把企业正式文档从混乱输入一路推进到可用稿、可审稿、可修订稿。**
+**这套 skill 不是为了"快速凑文档"，而是为了把企业正式文档从混乱输入一路推进到可用稿、可审稿、可修订稿。**

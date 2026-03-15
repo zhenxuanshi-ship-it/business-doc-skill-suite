@@ -15,6 +15,25 @@ Its job is to:
 - keep the workflow structured,
 - avoid messy jumps.
 
+## Agent execution rule
+
+This skill is a lightweight orchestrator.
+
+It does not replace `business-doc-writer` or `business-doc-reviewer`.
+Its job is to:
+- detect current stage,
+- recommend the next stage,
+- route to the right skill,
+- keep the workflow structured,
+- avoid messy jumps.
+
+**Default: main agent does the heavy work directly.** Writing, review, revision, and other substantial tasks are done in the main session by default.
+
+**Sub-agent mode only when user specifies.** Only spawn a sub-agent when the user explicitly asks for it, such as:
+- "用子代理写"
+- "派生子代理重跑"
+- "spawn child agent"
+
 ## Core stages
 
 1. **discovery**

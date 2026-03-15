@@ -7,6 +7,18 @@ description: Revise business and product documents based on review findings, int
 
 Revise an existing business document using concrete feedback.
 
+## Agent execution preference
+
+This skill is designed to run in the main / coordinator session by default.
+
+**Default: main agent revises directly.** The main agent should do the revision work directly.
+
+**Sub-agent mode only when user specifies.** Only use sub-agent for revision when the user explicitly asks for it, such as:
+- "用子代理修改"
+- "派生子代理修订"
+
+For all other cases, revise directly in the main session.
+
 This skill sits after:
 - `business-doc-reviewer`
 - `business-doc-integrity`
