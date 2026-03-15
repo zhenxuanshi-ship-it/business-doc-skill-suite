@@ -1,342 +1,285 @@
 # Business Doc Skill Suite
+## 商务文档智能生产套件
 
 > 当前版本：0.1.4
 
-面向 **企业 / 政务正式文档生产** 的 OpenClaw skill 套件。
+---
 
-这套 skill 不是给学术论文用的，而是给下面这些文档用的：
+## 一套专为企业和政务文档智能化生产打造的 OpenClaw Agent 技能体系。
 
-- 项目可行性研究报告
-- 项目建议书
-- 产品需求说明书（PRD）
-- 产品架构设计 / 技术方案
-- 实施方案 / 推进计划
-- 管理层摘要 / Executive Summary
+你是否遇到过这些问题？
 
-它的核心目标不是"快速凑一篇文档"，而是把正式文档的生产过程拆成：
+- AI 写的文档"看起来完整，读起来空洞"，全是标题没有内容
+- 写了一份建议书，但前后逻辑不通自己都没发现
+- 文档交出去后被领导质疑"数据哪来的、依据是什么"
+- 长文档写到一半断了，再也找不回之前的内容
+- 写完后不知道该从哪里开始修改
 
-> **澄清 → 写作 → 评审 → 校验 → 修订 → 定稿**
+**Business Doc Skill Suite** 正是为解决这些问题而设计的。
 
 ---
 
-## Changelog
+## 这套技能是做什么的？
 
-### 0.1.4 (2026-03-15)
+这是一套**企业级商务文档智能化生产工具**，专门用于生成高质量的：
 
-#### 优化
+- 📄 项目可行性研究报告（Feasibility Study Report）
+- 📋 项目建议书（Project Proposal）
+- 📝 产品需求文档（PRD / Product Requirements Document）
+- 🏗️ 技术架构设计（Architecture Design）
+- 📌 实施方案（Implementation Plan）
+- 📊 管理层摘要（Executive Summary）
 
-- **Skill触发词优化**：优化了所有skill的触发关键词，使其更容易被正确识别
-  - biz-discovery: 增加"需求梳理"、"项目brief"等
-  - writer: 增加"分节写"、"存盘写"、"checkpoint"
-  - reviewer: 增加"审一下"、"帮我review"等
-  - integrity: 增加"完整性检查"、"一致性检查"等
-  - reviser: 增加"修成v2"、"按反馈修改"等
-  - pipeline: 增加"走完整流程"、"一路做完"等
+它的核心价值不是"帮你快速写一篇文档"，而是**把文档生产变成一个可控的工业化流程**：
 
----
+> **澄清需求（Discovery） → 结构化写作（Writing） → 多维度评审（Review） → 一致性校验（Integrity） → 修订定稿（Revision）**
 
-### 0.1.3 (2026-03-15)
-
-#### 新增功能
-
-- **分节写作模式**
-  - 交互式分节写：写一章确认一章，适合长文档分步控制
-  - 存盘写（checkpoint）：写的同时自动每章存文件，最后拼成完整文档
-  - 支持触发词：`分节写`、`存盘写`、`checkpoint`
-
-- **README 使用说明完善**
-  - 新增 Workflow D：长文档分节写流程
-  - Quick Start 新增场景示例
+每一篇重要文档，都会经过这个流程的锤炼，确保：
+- 内容扎实，不是空标题
+- 逻辑自洽，不是前后矛盾
+- 依据充分，不是凭空臆造
+- 可追溯可修订，不是写完就丢
 
 ---
 
-### 0.1.2 (2026-03-15)
+## 核心特性
 
-#### 新增功能
+### 1. 长文模式（Dense-Longform Writing）
+针对项目建议书、可行性研究报告等长文档，启用专门的深度写作模式：
 
-- **长文模式（dense-longform）**
-  - 新增 `dense-longform` 模式，专门面向项目建议书、可行性研究报告
-  - 明确目标字数：`project-proposal` 3000-6000 中文字，`feasibility-report` 5000-10000 中文字
-  - 关键章节必须厚写：背景/现状、必要性、建设目标、建设内容、实施路径、预算说明、风险分析、结论建议
+- 目标字数：项目建议书 3000-6000 字，可行性研究报告 5000-10000 字
+- 关键章节必须"写透"：背景、现状、必要性、建设目标、建设内容、实施路径、预算说明、风险分析、结论建议
+- 每一章都要有"现状 → 问题 → 影响 → 方案 → 结论"的论证链条
 
-- **小标题与分点展开规则**
-  - 正文里凡是小标题和分点，不能只点名词，必须展开叙述
-  - 每个点后要回答：是什么、为什么、怎么运作、解决什么问题、有什么约束/风险
-  - reviewer 新增检查维度：检测"点名词但没展开"的问题
+### 2. 小标题与分点展开规则
+AI 写文档最常见的问题是"标题很多，内容很少"。这套技能强制要求：
 
-- **子代理执行策略**
-  - 默认：主代理直接写/审/改
-  - 只有用户明确指定时才用子代理（如"用子代理写"、"派生子代理重跑"）
+- 小标题后面必须有实质性叙述，不能只是一个短语
+- 每一个分点都要回答：是什么、为什么、怎么运作、解决什么问题、有什么风险
+- 避免"目录注释式"写法（只有一个标题，下面跟着一句解释）
 
-- **分节写作模式（新增）**
-  - 交互式分节写：写一章确认一章，适合长文档分步控制
-  - 存盘写（checkpoint）：写的同时自动每章存文件，最后拼成完整文档
+### 3. 分节写作模式（Section-by-Section Mode）
 
-#### 修复优化
+**交互式分节写（Interactive Mode）**
+- 先输出完整大纲，等你确认后再开始
+- 每写完一章，让你审核后再继续下一章
+- 适合：长文档、需要分步控制、想每章把关
 
-- 强化了"反骨架化"写作规则
-- 优化了 reviewer 的论证深度检查
-- 完善了 integrity 的建议支撑度验证
+触发关键词：`分节写` / `一章一章写` / `交互式`
 
----
+**存盘写作模式（Checkpoint Mode）**
+- 写作过程中自动每章存一个文件
+- 文件保存在 `./sections/01-xxx.md`, `02-xxx.md`...
+- 全部写完后自动合并成完整文档
+- 适合：长文档、防止中断丢失、想看每章进度
 
-### 0.1.1 (2026-03-14)
+触发关键词：`存盘写` / `checkpoint` / `分节存盘`
 
-- 初始版本发布
+### 4. 多角色评审（Multi-Role Review）
+不是只有"语法检查"，而是从企业真实角色视角审查：
 
----
+- 业务评审（Business Reviewer）：业务价值、必要性、战略契合度
+- 产品评审（Product Reviewer）：用户价值、范围边界、需求清晰度
+- 技术评审（Technical Reviewer）：架构可行性、技术复杂度、依赖关系
+- 交付评审（Delivery Reviewer）：时间线可行性、资源需求、执行风险
+- 风险评审（Risk Reviewer）：风险识别、假设条件、合规问题
+- 魔鬼辩护（Devil's Advocate）：质疑整体方案，找出隐藏问题
 
-## Why this exists
+### 5. 一致性校验（Integrity Check）
+不只是查错别字，而是深度检查：
 
-大多数 AI 写文档工具有两个常见问题：
-
-1. **只会搭骨架，不会填血肉**
-   - 标题很多
-   - 每节只有两三句
-   - 看起来完整，实则信息密度低
-
-2. **只会生成，不会审查**
-   - 不检查前后矛盾
-   - 不检查 recommendation 有没有依据
-   - 不检查 scope 有没有漂移
-   - 不把反馈变成可执行的 revision roadmap
-
-这套 skill 就是为了解决这两个问题：
-
-- 让文档先成型
-- 再从业务、产品、技术、风险几个视角审
-- 再做一致性 / 可信度 / 结构完整性检查
-- 最后根据反馈修订
+- 术语是否一致（如：有的地方叫"网格员"，有的地方叫"网格工作人员"）
+- 数字是否打架（预算前后不一致）
+- 建议是否有支撑（结论有没有依据）
+- Scope 是否漂移（范围有没有悄悄变大）
+- 风险是否闭环（提到的风险有没有应对措施）
 
 ---
 
-## Features
+## 技能列表（Skill List）
 
-- **Biz Discovery**：把会议纪要、聊天记录、零散想法整理成结构化 brief
-- **Business Doc Writer**：生成建议书、可研、PRD、架构设计等正式文档
-- **Business Doc Reviewer**：从企业多角色视角评审，不走学术审稿风格
-- **Business Doc Integrity**：检查逻辑、一致性、术语，数字、scope 和"骨架化风险"
-- **Business Doc Reviser**：按 review / integrity / stakeholder comments 定向修文
-- **Business Doc Pipeline**：做阶段判断和流程串联
-
----
-
-## Skill list
-
-### 1. `biz-discovery`
-把混乱输入整理成可写文档的中间产物。
+### 1. Biz Discovery（需求发现与梳理）
+把混乱的输入整理成结构化的项目brief。
 
 **适用场景**
+- 只有零散的想法
 - 只有会议纪要
 - 只有口头需求
-- 只有一堆零散想法
-- 不知道下一份该写建议书、可研还是 PRD
+- 不知道该写什么类型的文档
 
 **典型输出**
-- `project-brief.md`
-- `scope-definition.md`
-- `stakeholder-map.md`
-- `requirements-seed.md`
-- `risk-list.md`
-- `open-questions.md`
+- 项目背景与目标（Project Brief）
+- 范围定义（Scope Definition）
+- 干系人地图（Stakeholder Map）
+- 需求种子（Requirements Seed）
+- 风险列表（Risk List）
+- 待确认问题（Open Questions）
 
-**例子**
+**触发关键词**
 ```
 帮我梳理这个项目
-把这些会议纪要整理成项目输入
-先澄清范围，再写文档
+把会议纪要整理成brief
+先澄清需求
+需求梳理
 ```
 
 ---
 
-### 2. `business-doc-writer`
-把 brief 或现有材料写成正式文档草稿。
+### 2. Business Doc Writer（商务文档写作）
+把brief或现有材料写成正式的文档草稿。
 
 **支持文档类型**
-- `feasibility-report`
-- `project-proposal`
-- `prd`
-- `architecture-design`
-- `implementation-plan`
-- `executive-summary`
-- `dense-longform` (新增：长文模式)
+- 可行性研究报告（Feasibility Report）
+- 项目建议书（Project Proposal）
+- 产品需求文档（PRD）
+- 架构设计（Architecture Design）
+- 实施方案（Implementation Plan）
+- 管理层摘要（Executive Summary）
+- 长文模式（Dense-Longform）
 
 **支持分节模式**
-- `分节写` / `交互式` — 一章一章写，每章等你确认后再继续下一章
-- `存盘写` / `checkpoint` — 写的同时自动每章存一个文件，最后拼成完整文档
+- 交互式分节写：写一章确认一章
+- 存盘写（Checkpoint）：自动存盘最后合并
 
-**特点**
-- 先写透，再写全
-- 信息不足时会显式标 assumptions / open questions
-- 减少空标题和"目录注释"式写法
-- 小标题和分点必须展开叙述
-
-**例子**
+**触发关键词**
 ```
 写一个项目建议书
-写一个智慧园区可行性研究报告
-写一个统一认证中心 PRD
-写一个架构设计说明书
-写一个项目建议书，分节写
-写一份可研报告，存盘写
+写一份可研报告
+写产品需求文档
+写架构设计
+分节写
+存盘写
+checkpoint
 ```
 
 ---
 
-### 3. `business-doc-reviewer`
-从企业角色视角 review 文档。
+### 3. Business Doc Reviewer（文档评审）
+从企业多角色视角对文档进行深度评审。
 
-**默认 reviewer panel**
-- Business Reviewer
-- Product Reviewer
-- Technical Reviewer
-- Delivery Reviewer
-- Risk Reviewer
-- Devil's Advocate
+**评审维度**
+- 业务价值与必要性
+- 产品范围与需求清晰度
+- 技术可行性与复杂度
+- 交付时间线与资源
+- 风险与合规
+- 魔鬼辩护（质疑整体）
 
-**输出**
-- overall judgment
-- prioritized issue list
-- revision roadmap
-- final recommendation
-- skeletonization risk（骨架化风险）
-- 论证深度检查（新增）
-
-**例子**
+**触发关键词**
 ```
-帮我 review 这份建议书
-从技术和风险视角审一下这份架构方案
-找一下这份 PRD 的硬伤
+帮我review
+审一下这份文档
+评审这份PRD
+找风险
+从业务视角审
 ```
 
 ---
 
-### 4. `business-doc-integrity`
-做文档完整性与可信度校验。
+### 4. Business Doc Integrity（一致性校验）
+深度检查文档的内部一致性和可信度。
 
-**重点检查**
-- 术语是否一致
-- 数字是否打架
-- recommendation 有没有支撑
-- scope 是否漂移
-- 风险是否闭环
-- 文档是否"结构完整但内容失血"
+**检查重点**
+- 术语一致性
+- 数据一致性
+- 建议支撑度
+- Scope 收敛性
+- 风险闭环
+- "骨架化"程度
 
-**例子**
+**触发关键词**
 ```
-帮我做一致性检查
-看看有没有前后冲突
-做 final gate 检查
+完整性检查
+一致性检查
+integrity check
+查前后冲突
+校验
 ```
 
 ---
 
-### 5. `business-doc-reviser`
-按反馈修订文档。
+### 5. Business Doc Reviser（文档修订）
+根据评审意见和校验结果修订文档。
 
 **支持模式**
-- `full-revision`
-- `roadmap-only`
-- `section-rewrite`
-- `response-pack`
+- 全文修订（Full Revision）
+- 仅修订路线图（Roadmap Only）
+- 章节重写（Section Rewrite）
+- 修订回复（Response to Comments）
 
-**适合输入**
-- review report
-- integrity report
-- 领导意见
-- stakeholder comments
-- revision roadmap
-
-**例子**
+**触发关键词**
 ```
-按这些意见修改
-根据 integrity 报告修一版
-重写风险章节
-给我一份 response to comments
+按意见修改
+修成v2
+重写这一章
+根据反馈修订
 ```
 
 ---
 
-### 6. `business-doc-pipeline`
-做流程组织，不直接写正文。
+### 6. Business Doc Pipeline（流程编排）
+组织文档生产的完整流程。
 
 **职责**
-- 判断现在在哪个阶段
+- 判断当前阶段
 - 推荐下一步
-- 串联 writer / reviewer / integrity / reviser
+- 串联各技能
 
-**例子**
+**触发关键词**
 ```
-从头到尾搞定这份文档
-先写再 review 再修改
-走完整流程
+帮我走完整流程
+从头到尾搞定
+先写再review再修改
 ```
 
 ---
 
-## Recommended workflows
+## 推荐工作流
 
-### Workflow A — From messy input to final draft
-
-适合：你现在只有会议纪要、需求碎片、口头要求。
+### 工作流 A：从零开始到定稿
+适合：手里只有零散材料，没有正式文档
 
 ```
-biz-discovery
-  → business-doc-writer
-    → business-doc-reviewer
-      → business-doc-integrity
-        → business-doc-reviser
+Biz Discovery → Writer → Reviewer → Integrity → Reviser
 ```
 
 **示例**
 ```
 帮我梳理这个项目，后面我要写项目建议书
-基于上面的 brief，写一份项目建议书
-帮我 review 这份项目建议书
-再做一轮完整 integrity check
-按 review 和 integrity 的结果修成 v2
+基于brief写一份项目建议书
+帮我review这份建议书
+做完整性检查
+按反馈修订成v2
 ```
 
----
-
-### Workflow B — I already have a draft
-
-适合：你已经有建议书 / PRD / 架构设计初稿。
+### 工作流 B：已有初稿
+适合：已经有文档初稿，需要提升质量
 
 ```
-business-doc-reviewer
-  → business-doc-integrity
-    → business-doc-reviser
+Reviewer → Integrity → Reviser
 ```
 
 **示例**
 ```
-帮我 review 这份 PRD
-再做一轮完整 integrity check
-根据两轮意见修成 v2
+帮我review这份PRD
+做完整性检查
+按反馈修订成v2
 ```
 
----
-
-### Workflow C — I just want a draft fast
-
-适合：你已经知道要写什么，不想走完整流程。
+### 工作流 C：快速起草
+适合：知道要写什么，不需要完整流程
 
 ```
-business-doc-writer
+Writer
 ```
 
 **示例**
 ```
 写一个数据中台项目建议书
-写一个统一认证中心架构设计说明书
 ```
 
----
-
-### Workflow D — 长文档分节写
-
-适合：长文档（项目建议书、可行性研究报告），想分段控制进度。
+### 工作流 D：长文档分节写
+适合：项目建议书、可研报告等长文档，需要分段控制
 
 **方式一：交互式（每章确认）**
 ```
@@ -348,259 +291,121 @@ business-doc-writer
 写一份可研报告，存盘写
 ```
 
-分节写模式下，写作过程会被分成多个阶段，每个章节写完后可以审核或自动保存，最后合并成完整文档。
-
 ---
 
-## Design principles
+## 设计原则
 
-### 1. Write depth before breadth
-这套 skill 优先追求：
-- 章节内容扎实
-- 少一点空心标题
-- 多一点展开和判断依据
+### 1. Write Depth Before Breadth
+追求章节内容扎实，而不是标题数量多。
 
-而不是：
-- 目录很多
-- 每节两三句
-- 看起来完整，实际上没信息量
+### 2. Facts, Assumptions, Open Questions Must Be Separated
+信息不足时，不编造。会显式标注：
+- 已知事实（Facts）
+- 工作假设（Assumptions）
+- 待确认问题（Open Questions）
 
-### 2. Facts, assumptions, open questions must be separated
-信息不足时，不乱编。
-
-会优先显式输出：
-- known facts
-- working assumptions
-- open questions
-- risks and dependencies
-
-### 3. Review must produce action
-reviewer 的目标不是表达看法，而是输出：
-- 问题
+### 3. Review Must Produce Action
+评审的目标不是"写得不错"，而是输出：
+- 具体问题
 - 严重级别
-- 为什么重要
-- 建议怎么改
-- revision roadmap
+- 修改建议
+- 修订路线图
 
-### 4. Integrity is not grammar polish
-integrity 不只是查语病，而是查：
-- recommendation 是否成立
-- 章节有没有打架
+### 4. Integrity Is Not Grammar Polish
+一致性校验不只是查语病，而是查：
+- 建议是否成立
+- 章节是否矛盾
 - 数字是否一致
 - 风险是否闭环
-- 文档是不是骨架化严重
 
 ---
 
-## Document types
+## 适用人群
 
-### 项目建议书
-适合：
-- 立项前汇报
-- 给领导看
-- 报批前说明材料
-
-推荐流程：
-```
-discovery → writer(project-proposal) → reviewer → integrity → reviser
-```
+- 📌 **产品经理**：快速生成PRD、方案文档
+- 📌 **项目经理**：编写项目建议书、可研报告
+- 📌 **架构师**：撰写技术方案、架构设计
+- 📌 **售前顾问**：制作解决方案、投标文件
+- 📌 **运营负责人**：输出运营方案、执行计划
 
 ---
 
-### 可行性研究报告
-适合：
-- 做必要性、可行性、方案比选、投入产出分析
+## 常见问题
 
-推荐流程：
-```
-discovery → writer(feasibility-report) → reviewer(business-focus) → integrity → reviser
-```
+### Q: 这套技能适合什么人用？
+A: 需要生产高质量商务文档的企业员工、政务工作者、咨询顾问等。
 
----
+### Q: 和普通的AI写作有什么区别？
+A: 普通AI写作是"一键生成"，这套技能是"工业化生产"。它会帮你：
+- 结构化思考（Discovery）
+- 规范化写作（Writer）
+- 多角度评审（Reviewer）
+- 深度校验（Integrity）
+- 迭代修订（Reviser）
 
-### PRD
-适合：
-- 功能需求说明
-- 产品、设计、研发协同
+### Q: 需要收费吗？
+A: 这是开源技能，免费使用。
 
-推荐流程：
-```
-discovery(requirements-seed) → writer(prd) → reviewer(product-focus) → integrity → reviser
-```
+### Q: 如何开始？
+A: 直接告诉它你要写什么，比如"帮我写一个智慧园区项目建议书"。
 
 ---
 
-### 架构设计 / 技术方案
-适合：
-- 技术方案设计
-- 模块拆分
-- 数据流、接口、部署和风险说明
+## 文件位置
 
-推荐流程：
-```
-discovery → writer(architecture-design) → reviewer(technical-focus) → integrity → reviser
-```
+- 本地技能路径：`~/.openclaw/skills/`
+- 设计文档：`~/.openclaw/workspace/designs/`
+- 使用文档：`~/.openclaw/workspace/README-business-doc-skill-suite.md`
 
 ---
 
-## Common prompts
+## 快速开始
 
-### Discovery
-```
-帮我梳理这个项目
-把这些会议纪要整理成项目 brief
-先帮我拆清楚范围和干系人
-把这些零散需求整理成可写 PRD 的输入
-```
-
-### Writer
-```
-写一个项目建议书
-写一个可行性研究报告
-写一个 PRD
-写一个架构设计说明书
-把这份 brief 变成正式文档
-```
-
-#### 分节写作模式
-
- Writer 支持两种分节模式，适合长文档写作：
-
-**模式一：交互式分节写**
-```
-写一个项目建议书，分节写
-写一份可研报告，交互式
-```
-
-行为：
-1. 先输出大纲，等你确认
-2. 写完第 1 章后问你"继续第 2 章吗？"
-3. 你确认后才继续下一章
-4. 全部写完后自动合并
-
-适合：长文档、需要分步控制、想每章审核
-
-**模式二：存盘写（checkpoint）**
-```
-写一个项目建议书，存盘写
-写一份可研报告，checkpoint
-```
-
-行为：
-1. 正常写作，每写完一章自动存一个文件
-2. 文件保存在 `./sections/01-xxx.md`, `02-xxx.md`...
-3. 全部写完后自动合并成完整文档
-4. 保留分节文件供后续查阅
-
-适合：长文档、防止中断丢失、想看每章进度
-
-**不指定模式时**：正常一次性写完
-
----
-
-### Reviewer
-```
-帮我 review 这份文档
-从业务和风险视角审一下
-挑一下这份架构设计的硬伤
-看看这个文档有没有骨架化问题
-```
-
-### Integrity
-```
-帮我做一致性检查
-看有没有前后冲突
-查查 recommendation 有没有支撑
-做 final gate 检查
-```
-
-### Reviser
-```
-按这些意见修一版
-重写这一节
-根据 roadmap 做 v2
-给我一份 response to comments
-```
-
----
-
-## Known limitations
-
-当前仍是 v0.x / MVP 阶段，已知局限包括：
-
-1. **对本地化业务规则依赖人工补充**
-   - 比如地方版"四步十调"定义、部门职责边界、点位数量等
-
-2. **对真实预算和真实约束仍需喂数**
-   - skill 能帮你写结构和判断逻辑，但不能凭空知道你本地真实采购口径
-
-3. **reviewer / integrity 不是程序化万能校验器**
-   - 已经能识别"骨架化风险"和明显矛盾，但不是形式化验证系统
-
-4. **复杂项目建议至少跑两轮**
-   - 第一轮：成稿
-   - 第二轮：review + integrity + revise
-
----
-
-## File locations
-
-本地 skill 路径：
-
-- `~/.openclaw/skills/biz-discovery/`
-- `~/.openclaw/skills/business-doc-writer/`
-- `~/.openclaw/skills/business-doc-reviewer/`
-- `~/.openclaw/skills/business-doc-integrity/`
-- `~/.openclaw/skills/business-doc-reviser/`
-- `~/.openclaw/skills/business-doc-pipeline/`
-
-设计稿路径：
-- `~/.openclaw/workspace/designs/business-docs-skill-suite-design.md`
-
-README 路径：
-- `~/.openclaw/workspace/README-business-doc-skill-suite.md`
-
----
-
-## Quick start
-
-如果你第一次用，最简单的启动方式是：
-
-### 场景 1：什么都没有
+### 场景 1：从零开始
 ```
 帮我梳理这个项目，后面我要写项目建议书
 ```
 
-### 场景 2：直接写
+### 场景 2：直接写作
 ```
-写一个 XXX 项目建议书
-```
-
-### 场景 3：分节写（长文档推荐）
-```
-写一个 XXX 项目建议书，分节写
-写一份 XXX 可行性研究报告，存盘写
+写一个XXX项目建议书
 ```
 
-### 场景 4：已有文档要提升
+### 场景 3：分节写长文档
 ```
-帮我 review 这份文档，再做 integrity check，最后按意见修一版
+写一个XXX项目建议书，分节写
+```
+
+### 场景 4：已有文档提升质量
+```
+帮我review这份文档，再做完整性检查，最后按反馈修一版
 ```
 
 ---
 
-## Roadmap
+## 更新日志
 
-后续可以继续增强：
+### 0.1.4 (2026-03-15)
+- 优化技能触发词，使识别更精准
 
-- 更强的预算明细生成能力
-- 更细的方案比选模板
-- 更强的 cross-document 对齐检查（PRD ↔ 架构设计 ↔ 实施方案）
-- 更细的 doc-type references
-- 更实用的脚本化一致性检查器
+### 0.1.3 (2026-03-15)
+- 新增分节写作模式（交互式 + 存盘）
+
+### 0.1.2 (2026-03-15)
+- 新增长文模式（dense-longform）
+- 新增小标题分点展开规则
+- 优化子代理执行策略
+
+### 0.1.1 (2026-03-14)
+- 初始版本发布
 
 ---
 
-## One-line summary
+## 了解更多
 
-**这套 skill 不是为了"快速凑文档"，而是为了把企业正式文档从混乱输入一路推进到可用稿、可审稿、可修订稿。**
+- GitHub: https://github.com/zhenxuanshi-ship-it/business-doc-skill-suite
+- 文档持续更新中...
+
+---
+
+**一句话总结：一套让AI写出高质量企业文档的技能套件，不是"帮我写文档"，而是"帮我写好文档"。**
