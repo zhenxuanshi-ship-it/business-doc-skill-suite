@@ -592,6 +592,74 @@ README 路径：
 
 ---
 
+## Project structure
+
+```text
+business-doc-skill-suite/
+├── README.md
+├── LICENSE
+├── .gitignore
+└── skills/
+    ├── biz-discovery/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   ├── assets/templates/
+    │   └── scripts/
+    ├── business-doc-writer/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   ├── assets/templates/
+    │   └── scripts/
+    ├── business-doc-reviewer/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   ├── assets/templates/
+    │   └── scripts/
+    ├── business-doc-integrity/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   ├── assets/templates/
+    │   └── scripts/
+    ├── business-doc-reviser/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   ├── assets/templates/
+    │   └── scripts/
+    └── business-doc-pipeline/
+        ├── SKILL.md
+        ├── references/
+        ├── assets/templates/
+        └── scripts/
+```
+
+### What each folder contains
+
+- **SKILL.md**
+  - 触发描述 + 核心工作流
+  - 决定 skill 什么时候被调用、怎么做任务
+
+- **references/**
+  - 给 skill 按需读取的参考规则
+  - 比如文档类型映射、review rubrics、integrity patterns
+
+- **assets/templates/**
+  - 模板文件
+  - 用来快速生成项目 brief、建议书、PRD、review report、revision roadmap 等骨架
+
+- **scripts/**
+  - 轻量辅助脚本
+  - 比如文件名生成、stage 检测、review checklist、术语/数字提取、feedback 分类
+
+### Design rationale
+
+这个 repo 采用的是“多 skill + 轻 orchestration”结构，而不是一个超大单体 skill。
+
+这样拆的好处是：
+- discovery、writing、review、integrity、revision 可以单独使用
+- pipeline 只负责串联，不负责把所有规则塞进一个超大 prompt
+- references / templates / scripts 可以按 skill 就地维护
+- 后续新增 doc type 或 review mode 时更容易演进
+
 ## Roadmap
 
 后续可以继续增强：
