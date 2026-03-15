@@ -233,6 +233,72 @@ When helpful, append these sections:
 
 These are often more useful than polishing prose.
 
+## Section-by-Section Writing Mode
+
+This skill supports two optional modes for writing long documents. Activate them by specifying in your request:
+
+### Mode A: Interactive Section Writing (交互式分节写)
+
+**Trigger**: "分节写" / "一章一章写" / "分段写" / "section-mode interactive"
+
+**Behavior**:
+1. First, output the **outline** (section structure) for confirmation
+2. Write **one section at a time**
+3. After each section, ask for **confirmation** before continuing to the next
+4. You confirm each chapter before the next one starts
+5. After all sections are done, **combine** into the final document
+
+**How to implement**:
+- Output the outline first, wait for user confirmation
+- Write section 1 completely (with full expansion, not brief)
+- Ask: "第1章写完了，继续第2章吗？"
+- Wait for confirmation before writing section 2
+- Repeat until all sections complete
+- Finally, combine all sections into one document and offer to save
+
+**Use when**:
+- You want to review each section before moving on
+- You want to make corrections mid-way
+- The document is very long and you want incremental control
+
+### Mode B: Auto-Checkpoint Writing (自动存盘写)
+
+**Trigger**: "存盘写" / "checkpoint" / "分节存盘" / "section-mode checkpoint"
+
+**Behavior**:
+1. Write the full document in one go
+2. **Automatically save each section** to a separate file as it's written
+   - Save location: `./sections/01-{section-name}.md`
+   - Each section file contains the full content of that section
+3. After all sections are written, **combine** them into the final document at `./{doc-name}.md`
+4. Keep the section files as intermediate artifacts (don't delete)
+
+**How to implement**:
+- Create a `sections/` subdirectory
+- After finishing each section, write it to a separate file immediately
+- Continue writing the next section
+- After all done, read all section files and combine into final document
+- Report both the section files and the final combined file
+
+**Use when**:
+- You want automatic backup in case of interruption
+- You want to review individual sections later
+- You want transparency into the writing process
+
+### How to use
+
+Simply include one of these triggers in your request:
+
+```
+写一个项目建议书，分节写
+写一份可行性研究报告，存盘写
+写一个智慧园区方案，分章写 checkpoint
+```
+
+If no section mode is specified, the skill writes the document normally in one pass.
+
+**Default behavior**: Normal writing (write all at once, no checkpoints)
+
 ## Output rules by document type
 
 ### feasibility-report
